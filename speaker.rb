@@ -34,6 +34,21 @@ get '/stylesheets/:name.css' do
  scss :"stylesheets/#{params[:name]}"
 end
 
+get '/volume/:value' do
+  volume = case params[:value]
+  when "max"
+    10
+  when "mute"
+    0
+  when "min"
+    0
+  else
+    params[:value].to_i
+  end
+  
+  system "osascript -e \"set Volume #{volume}\""
+end
+
 post '/say' do
   # sadly, this mutex doesn't work WHY???
   mutex.synchronize {
