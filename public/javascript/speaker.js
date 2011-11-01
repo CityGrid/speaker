@@ -8,9 +8,15 @@ var Speaker = new function() {
       }
     );
   }
+
+  my.Volume = function(value) {
+    $.get("/volume/"+value
+    );
+  }
   
   return my;
 }
+
 
 $(function() {
   $("#chatbox").keyup(function(event) {
@@ -19,4 +25,16 @@ $(function() {
       $("#chatbox").val("");
     }
   });
+
+  $("#volume-up").click(function() {
+    Speaker.Volume("up");
+  });
+
+
+  $("#volume-down").click(function() {
+    Speaker.Volume("down");
+  });
+
 });
+
+

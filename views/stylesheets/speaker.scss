@@ -10,3 +10,23 @@ body {
   font-family: Arial;
   padding: 10px;
 }
+
+#volume-controls {
+  margin: 10px;
+}
+
+.volume-control {
+  display: inline-block;
+  cursor: pointer;
+  height: 30px;
+  width: 120px;
+  border: 1px solid #000;
+  line-height: 30px;
+  text-align: center;
+}
+
+#volume-up {
+}
+
+#volume-down {
+}

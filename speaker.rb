@@ -35,19 +35,43 @@ get '/stylesheets/:name.css' do
 end
 
 get '/volume/:value' do
-  volume = case params[:value]
-  when "max"
-    10
-  when "mute"
-    0
-  when "min"
-    0
+  # obtain the current volume
+  if params[:value] == "current"
+    `cat volume`
+  # set the volume
   else
-    params[:value].to_i
-  end
+    current_volume = `cat volume`
+    current_volume = current_volume.to_i || 0
+    volume = case params[:value]
+    when "max"
+      10
+    when "mute"
+      0
+    when "min"
+      0
+    when "up"
+      if current_volume == 10
+        10
+      else
+        current_volume + 1
+      end
+    when "down"
+      if current_volume == 0
+        0
+      else
+        current_volume - 1
+      end
+    else
+      params[:value].to_i
+    end
   
-  system "osascript -e \"set Volume #{volume}\""
+    puts "Volume is now #{volume}"
+    # save the volume in a stateful file
+    system "echo #{volume} > volume"
+    system "osascript -e \"set Volume #{volume}\""
+  end
 end
+
 
 post '/say' do
   # sadly, this mutex doesn't work WHY???
